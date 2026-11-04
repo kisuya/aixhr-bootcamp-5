@@ -1,0 +1,48 @@
+{
+  "sessions": [
+    {
+      "id": "1",
+      "label": "1회차",
+      "title": "Claude 시작하기",
+      "date": "2026-10-14",
+      "dateLabel": "10/14(수)",
+      "open": true,
+      "summary": "Claude 세팅과 커넥터 연결, 내 업무 문제 정의와 첫 실행"
+    },
+    {
+      "id": "2",
+      "label": "2회차",
+      "title": "Claude와 함께 일하기",
+      "date": "2026-10-20",
+      "dateLabel": "10/20(화)",
+      "open": true,
+      "tentative": true,
+      "summary": "스킬과 예약 작업, Cowork, 브라우저와 화면 제어, Apps Script와 API"
+    },
+    {
+      "id": "3",
+      "label": "3회차",
+      "title": "Claude Code",
+      "date": "2026-10-27",
+      "dateLabel": "10/27(화)",
+      "open": true,
+      "tentative": true,
+      "summary": "Claude Code로 HR 미니앱 만들기, 사내망과 폐쇄망에서 쓰기, 로그인과 배포, 내 도구 시작"
+    },
+    {
+      "id": "4",
+      "label": "4회차",
+      "title": "내 도구 만들기",
+      "date": "2026-11-03",
+      "dateLabel": "11/03(화)",
+      "open": false,
+      "hidden": true,
+      "summary": "각자 내 도구를 이어서 만들고, 원하는 사람만 보여 주기"
+    }
+  ],
+  "appendix": {
+    "id": "9",
+    "label": "부록",
+    "title": "참고 자료"
+  }
+}

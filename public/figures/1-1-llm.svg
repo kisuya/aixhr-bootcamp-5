@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 222" width="720" height="222" role="img" aria-labelledby="t d">
+<title id="t">학습할 때와 답할 때</title>
+<desc id="d">학습할 때는 많은 글로 모델 안의 패턴이 조정된다. 답할 때는 지금 주어진 문맥을 보고 다음 말을 이어 쓴다. 대화에 올린 파일은 답할 때의 문맥이고, 그 자리에서 모델을 다시 학습시키지 않는다.</desc>
+<style>text{font-family:'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;} .h{font-weight:700;font-size:18px} .s{font-size:14px;fill:#5b6670} .c{font-size:14px;fill:#5b6670}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5b6670"/></marker>
+<marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b4532a"/></marker></defs>
+<rect x="0" y="0" width="720" height="222" rx="16" fill="#ffffff"/>
+<text class="c" x="20" y="62" text-anchor="start" style="fill:#0f7a72;font-weight:700">학습할 때</text>
+<rect x="120" y="28" width="220" height="58" rx="10" fill="#ecf6f5" stroke="#0f7a72" stroke-width="1.5"/>
+<text class="h" x="230.0" y="63.0" text-anchor="middle" fill="#0f7a72" style="font-size:16px">많은 글</text>
+<line x1="344" y1="57" x2="392" y2="57" stroke="#5b6670" stroke-width="2" marker-end="url(#a)"/>
+<rect x="400" y="28" width="300" height="58" rx="10" fill="#ecf6f5" stroke="#0f7a72" stroke-width="1.5"/>
+<text class="h" x="550.0" y="63.0" text-anchor="middle" fill="#0f7a72" style="font-size:16px">모델 안의 패턴이 조정됨</text>
+<text class="c" x="20" y="140" text-anchor="start" style="fill:#1f5fbf;font-weight:700">답할 때</text>
+<rect x="120" y="104" width="220" height="72" rx="10" fill="#eef4fc" stroke="#1f5fbf" stroke-width="1.5"/>
+<text class="h" x="230.0" y="136.0" text-anchor="middle" fill="#1f5fbf" style="font-size:16px">지금 주어진 문맥</text>
+<text class="s" x="230.0" y="162.0" text-anchor="middle">질문, 지침, 올린 파일</text>
+<line x1="344" y1="140" x2="392" y2="140" stroke="#5b6670" stroke-width="2" marker-end="url(#a)"/>
+<rect x="400" y="104" width="300" height="72" rx="10" fill="#eef4fc" stroke="#1f5fbf" stroke-width="1.5"/>
+<text class="h" x="550.0" y="136.0" text-anchor="middle" fill="#1f5fbf" style="font-size:16px">다음 말을 이어 씀</text>
+<text class="s" x="550.0" y="162.0" text-anchor="middle">만든 말을 다시 문맥에 넣어 반복</text>
+<text class="c" x="360" y="206" text-anchor="middle">대화에 올린 파일은 답할 때의 문맥입니다. 그 자리에서 모델을 다시 학습시키지 않습니다.</text>
+</svg>

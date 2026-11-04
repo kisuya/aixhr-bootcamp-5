@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 236" width="720" height="236" role="img" aria-labelledby="t d">
+<title id="t">LLM, RAG, Agent의 관계</title>
+<desc id="d">LLM은 배운 패턴과 문맥으로 문장을 만든다. 자료 검색을 더하면 RAG, 도구와 반복을 더하면 Agent다. Agent도 필요하면 자료 검색을 쓴다.</desc>
+<style>text{font-family:'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;} .h{font-weight:700;font-size:18px} .s{font-size:14px;fill:#5b6670} .c{font-size:14px;fill:#5b6670}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5b6670"/></marker>
+<marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b4532a"/></marker></defs>
+<rect x="0" y="0" width="720" height="236" rx="16" fill="#ffffff"/>
+<rect x="20" y="24" width="200" height="100" rx="10" fill="#eef4fc" stroke="#1f5fbf" stroke-width="1.5"/>
+<text class="h" x="120.0" y="60.0" text-anchor="middle" fill="#1f5fbf" style="font-size:18px">LLM</text>
+<text class="s" x="120.0" y="86.0" text-anchor="middle">배운 패턴과 문맥으로</text>
+<text class="s" x="120.0" y="106.0" text-anchor="middle">문장을 만든다</text>
+<rect x="260" y="24" width="200" height="100" rx="10" fill="#ecf6f5" stroke="#0f7a72" stroke-width="1.5"/>
+<text class="h" x="360.0" y="60.0" text-anchor="middle" fill="#0f7a72" style="font-size:18px">LLM + 자료 검색</text>
+<text class="s" x="360.0" y="86.0" text-anchor="middle">관련 규정을 찾아</text>
+<text class="s" x="360.0" y="106.0" text-anchor="middle">근거로 답한다</text>
+<rect x="500" y="24" width="200" height="100" rx="10" fill="#fbf1ec" stroke="#b4532a" stroke-width="1.5"/>
+<text class="h" x="600.0" y="60.0" text-anchor="middle" fill="#b4532a" style="font-size:18px">LLM + 도구 + 반복</text>
+<text class="s" x="600.0" y="86.0" text-anchor="middle">실행 결과를 보며</text>
+<text class="s" x="600.0" y="106.0" text-anchor="middle">일을 이어 간다</text>
+<line x1="224" y1="74" x2="255" y2="74" stroke="#5b6670" stroke-width="2" marker-end="url(#a)"/>
+<line x1="464" y1="74" x2="495" y2="74" stroke="#5b6670" stroke-width="2" marker-end="url(#a)"/>
+<text class="c" x="120" y="152" text-anchor="middle" style="fill:#1f5fbf;font-weight:700">LLM</text>
+<text class="c" x="360" y="152" text-anchor="middle" style="fill:#0f7a72;font-weight:700">RAG</text>
+<text class="c" x="600" y="152" text-anchor="middle" style="fill:#b4532a;font-weight:700">Agent</text>
+<text class="c" x="360" y="194" text-anchor="middle">자료와 도구가 더해질수록 할 수 있는 일이 넓어집니다.</text>
+<text class="c" x="360" y="216" text-anchor="middle">Agent도 필요하면 자료 검색을 씁니다.</text>
+</svg>

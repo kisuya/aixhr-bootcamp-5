@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-labelledby="t d">
+<title id="t">RAG가 답하는 순서</title>
+<desc id="d">질문을 받으면 규정 보관함에서 관련 부분을 찾고, 찾은 조항을 근거로 LLM이 답을 만든다. 예: 경조휴가는 며칠인가요? 본인 결혼 5일, 부모 사망 5일, 근거는 취업규칙 3-3.</desc>
+<style>text{font-family:'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;} .h{font-weight:700;font-size:18px} .s{font-size:14px;fill:#5b6670} .c{font-size:14px;fill:#5b6670}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5b6670"/></marker>
+<marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b4532a"/></marker></defs>
+<rect x="0" y="0" width="720" height="250" rx="16" fill="#ffffff"/>
+<rect x="20" y="24" width="190" height="80" rx="10" fill="#eef4fc" stroke="#1f5fbf" stroke-width="1.5"/>
+<text class="h" x="115.0" y="60.0" text-anchor="middle" fill="#1f5fbf" style="font-size:18px">질문</text>
+<text class="s" x="115.0" y="86.0" text-anchor="middle">경조휴가는 며칠인가요?</text>
+<line x1="214" y1="64" x2="258" y2="64" stroke="#5b6670" stroke-width="2" marker-end="url(#a)"/>
+<rect x="265" y="24" width="190" height="80" rx="10" fill="#ecf6f5" stroke="#0f7a72" stroke-width="1.5"/>
+<text class="h" x="360.0" y="60.0" text-anchor="middle" fill="#0f7a72" style="font-size:18px">관련 부분 찾기</text>
+<text class="s" x="360.0" y="86.0" text-anchor="middle">취업규칙 3-3 경조사 휴가</text>
+<line x1="459" y1="64" x2="503" y2="64" stroke="#5b6670" stroke-width="2" marker-end="url(#a)"/>
+<rect x="510" y="24" width="190" height="80" rx="10" fill="#eef4fc" stroke="#1f5fbf" stroke-width="1.5"/>
+<text class="h" x="605.0" y="60.0" text-anchor="middle" fill="#1f5fbf" style="font-size:18px">LLM이 답을 만듦</text>
+<text class="s" x="605.0" y="86.0" text-anchor="middle">찾은 조항을 근거로</text>
+<rect x="265" y="150" width="190" height="80" rx="10" fill="#ecf6f5" stroke="#0f7a72" stroke-width="1.5"/>
+<text class="h" x="360.0" y="186.0" text-anchor="middle" fill="#0f7a72" style="font-size:18px">규정 보관함</text>
+<text class="s" x="360.0" y="212.0" text-anchor="middle">날짜와 버전이 맞는 문서만</text>
+<line x1="360" y1="146" x2="360" y2="110" stroke="#5b6670" stroke-width="2" marker-end="url(#a)"/>
+<line x1="605" y1="108" x2="605" y2="150" stroke="#5b6670" stroke-width="2" marker-end="url(#a)"/>
+<text class="c" x="605" y="176" text-anchor="middle" style="fill:#1f5fbf;font-weight:700">본인 결혼 5일, 부모 사망 5일</text>
+<text class="c" x="605" y="200" text-anchor="middle">근거: 취업규칙 3-3</text>
+</svg>

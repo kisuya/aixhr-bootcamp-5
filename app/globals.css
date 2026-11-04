@@ -1,0 +1,1488 @@
+/*
+ * Ported from claude-education-site/app/globals.css (824 lines).
+ *
+ * Changes from the reference:
+ * - Dropped the leading `@import "tailwindcss"` and the `@theme inline`
+ *   block: the reference design is plain CSS with no Tailwind utility
+ *   classes, and porting it means this file is now the single source of
+ *   layout truth (v1's Tailwind-based globals.css is gone).
+ * - The reference's four-variant exercise callout styling (실습 문제/생각할
+ *   시간/정답 예시/결과 확인 → --question/--pause/--answer/--check +
+ *   .exercise-answer <details>) does not match how this curriculum's
+ *   source markdown is written: 생각할 시간/실습 문제 show up as
+ *   emoji-prefixed blockquotes, not their own callout kind, so they are
+ *   replaced with six emoji-keyed callouts: --warning (⚠️), --tip (💡),
+ *   --cost (💰), --check (📌), --instructor (📋, labeled note block), and
+ *   --figure (🖼️, "화면 확인": what the screen should show at that step).
+ *   정답 예시 and
+ *   따라해보기 do still use raw <details><summary> in content/*.md (see
+ *   MarkdownContent.tsx's rehype-raw note); those are styled generically
+ *   further down (see "Collapsible answer blocks" below), not through the
+ *   reference's per-variant custom properties.
+ */
+
+:root {
+  --coursera-blue: #0056d2;
+  --coursera-blue-deep: #003e9a;
+  --coursera-white: #ffffff;
+  --coursera-surface: #f5f8ff;
+  --coursera-ink: #1f1f1f;
+  --coursera-muted: #6b7280;
+  --coursera-border: #d9e3f5;
+  --coursera-success: #16825d;
+  --coursera-warm: #fff0d9;
+  --background: #ffffff;
+  --surface: #ffffff;
+  --surface-muted: #f5f8ff;
+  --text: #1f1f1f;
+  --muted: #6b7280;
+  --border: #d9e3f5;
+  --border-strong: #b8c8e8;
+  --accent: var(--coursera-blue);
+  --accent-strong: #003e9a;
+  --accent-soft: #e8f1ff;
+  --quote-border: var(--coursera-blue);
+  --quote-text: #23324d;
+  --code-bg: #f8fbff;
+  --code-toolbar: #f5f8ff;
+  --code-text: #1f2937;
+  --shadow-soft: 0 8px 18px rgb(0 86 210 / 4%);
+  --shadow-card: 0 14px 28px rgb(0 86 210 / 8%);
+  --shadow: 0 16px 40px rgb(0 86 210 / 10%);
+
+  /* Callout accent colors (six emoji-keyed kinds). */
+  --callout-warning-border: #dc2626;
+  --callout-warning-bg: #fef5f5;
+  --callout-warning-text: #7f1d1d;
+  --callout-tip-border: #0d9488;
+  --callout-tip-bg: #f0fdfa;
+  --callout-tip-text: #0f4c46;
+  --callout-cost-border: #b45309;
+  --callout-cost-bg: #fffbeb;
+  --callout-cost-text: #78350f;
+  --callout-check-border: var(--coursera-success);
+  --callout-check-bg: #f1fbf7;
+  --callout-check-text: #183e31;
+  --callout-instructor-border: #9ca3af;
+  --callout-instructor-bg: #f9fafb;
+  --callout-instructor-text: #374151;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family:
+    "Source Sans 3",
+    "Helvetica Neue",
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    Arial,
+    sans-serif;
+}
+
+body,
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--accent-strong);
+}
+
+::selection {
+  background: #dbeafe;
+}
+
+.guide-page {
+  min-height: 100vh;
+}
+
+.reading-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1200;
+  height: 4px;
+  background: rgb(0 86 210 / 10%);
+}
+
+.reading-progress__bar {
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transition: transform 120ms ease-out;
+}
+
+.lecture-mode-toggle {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  z-index: 1300;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 94%);
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 800;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+}
+
+.lecture-mode-toggle:hover,
+.lecture-mode-toggle:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: 0;
+}
+
+.guide-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr); /* 사이드바 메뉴가 한 줄에 들어가게 넓힘 */
+  max-width: 1720px;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.guide-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 32px 20px 28px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--surface-muted), var(--surface));
+}
+
+.navigation-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.guide-brand {
+  display: block;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+}
+
+.guide-brand__eyebrow {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.guide-brand__title {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.guide-search {
+  display: grid;
+  gap: 8px;
+}
+
+.guide-search label,
+.search-results__label,
+.toc__label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.guide-search__field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+.guide-search__field:focus-within {
+  border-color: var(--accent-strong);
+  outline: 3px solid var(--accent-soft);
+}
+
+.guide-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+}
+
+.guide-search input::placeholder {
+  color: #7a8491;
+}
+
+.search-results {
+  display: grid;
+  gap: 8px;
+}
+
+.search-results ol,
+.toc ol {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.search-results ol {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+}
+
+.search-results button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+  box-shadow: var(--shadow-soft);
+}
+
+.search-results button:hover,
+.search-results button:focus-visible {
+  border-color: var(--accent-strong);
+  outline: 0;
+}
+
+.search-results span {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 0.88rem;
+  font-weight: 750;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-results small {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.search-results__empty {
+  margin: 0;
+  padding: 10px;
+  border: 1px dashed var(--border-strong);
+  border-radius: 14px;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.search-results__chapter {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- */
+/* Chapter nav - tracks (여는 시간/바이브코딩/실습/참고) → chapter link */
+/* → current chapter's h2 headings nested beneath it.                */
+/* ---------------------------------------------------------------- */
+
+.chapter-nav {
+  display: grid;
+  gap: 20px;
+}
+
+.chapter-nav__track {
+  display: grid;
+  gap: 6px;
+}
+
+.chapter-nav__track-label {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.chapter-nav__list,
+.chapter-nav__headings {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.chapter-nav__list {
+  gap: 2px;
+}
+
+.chapter-nav__item {
+  min-width: 0;
+}
+
+.chapter-nav__link {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 10px;
+  color: #344054;
+  font-size: 0.9rem;
+  line-height: 1.38;
+  text-decoration: none;
+}
+
+.chapter-nav__link:hover,
+.chapter-nav__link:focus-visible {
+  background: var(--surface-muted);
+  color: var(--accent-strong);
+  outline: 0;
+}
+
+.chapter-nav__link.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.chapter-nav__number {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.chapter-nav__link.is-active .chapter-nav__number {
+  color: var(--accent);
+}
+
+.chapter-nav__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chapter-nav__headings {
+  gap: 2px;
+  padding: 2px 0 6px;
+}
+
+.chapter-nav__headings a {
+  display: block;
+  padding: 5px 9px 5px 30px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  text-decoration: none;
+  /* 항목은 항상 한 줄 - 볼드(활성)로도 줄바꿈이 생기지 않는다 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chapter-nav__headings a:hover,
+.chapter-nav__headings a:focus-visible {
+  background: var(--surface-muted);
+  color: var(--accent-strong);
+  outline: 0;
+}
+
+.chapter-nav__headings a.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+
+.guide-main {
+  min-width: 0;
+  /* 오른쪽 위에 고정된 강의 모드 버튼(약 130px) 밑으로 글줄이 지나가지 않게 오른쪽을 비운다. */
+  padding: 58px 150px 112px clamp(40px, 4vw, 68px);
+  background:
+    linear-gradient(180deg, rgb(245 248 255 / 74%), rgb(255 255 255 / 0%) 300px),
+    var(--surface);
+}
+
+.guide-article {
+  width: min(100%, 1320px); /* wider measure so 16:9 monitors use the space beside the sidebar */
+  margin: 0 auto;
+  color: var(--text);
+  overflow-wrap: break-word;
+}
+
+.guide-article img {
+  /* 본문 가로 폭에 딱 맞춘다. 강의 모드에서는 본문이 넓어지므로 함께 커진다. */
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 20px 0;
+  border: 1px solid var(--coursera-border);
+  border-radius: 12px;
+}
+
+.figure-scroll {
+  display: block;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+
+.figure-scroll img {
+  margin: 0;
+}
+
+.figure-scroll__hint {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .figure-scroll img {
+    width: 600px;
+    max-width: none;
+  }
+
+  /* 그림이 화면보다 넓을 때만 보이는 안내. 그림 아래 왼쪽에 고정해 가로로 밀어도 따라 움직이지 않게 한다. */
+  .figure-scroll__hint {
+    display: block;
+    position: sticky;
+    left: 0;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+}
+
+.guide-article > :first-child {
+  margin-top: 0;
+}
+
+.guide-article p,
+.guide-article li,
+.guide-article blockquote,
+.guide-article details {
+  font-size: 1.25rem; /* ~20px, up from ~19px */
+  line-height: 1.9;
+}
+
+.guide-article p,
+.guide-article ul,
+.guide-article ol,
+.guide-article blockquote,
+.guide-article details,
+.guide-article .table-scroll,
+.guide-article .code-block,
+.guide-article ul,
+.guide-article ol {
+  padding-left: 1.65rem;
+}
+
+.guide-article li + li {
+  margin-top: 0.65rem;
+}
+
+.guide-article .contains-task-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.guide-article .task-list-item {
+  list-style: none;
+}
+
+.guide-article .task-list-item input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0 0.65rem 0 0;
+  vertical-align: -0.12em;
+  accent-color: var(--accent);
+}
+
+.guide-article hr {
+  width: 100%;
+  height: 1px;
+  margin: 2.65rem 0;
+  border: 0;
+  background: var(--border);
+}
+
+/* ---------------------------------------------------------------- */
+/* Chapter pagination - prev/next links at the bottom of the article */
+/* ---------------------------------------------------------------- */
+
+.chapter-pagination {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.chapter-pagination__link {
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
+}
+
+.chapter-pagination__link:hover,
+.chapter-pagination__link:focus-visible {
+  border-color: var(--accent-strong);
+  outline: 0;
+}
+
+.chapter-pagination__link--next {
+  grid-column: 2;
+  text-align: right;
+}
+
+.chapter-pagination__label {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.chapter-pagination__title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .chapter-pagination {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-pagination__link--next {
+    grid-column: 1;
+    text-align: left;
+  }
+}
+
+.guide-heading {
+  color: var(--text);
+  letter-spacing: 0;
+  scroll-margin-top: 82px;
+}
+
+.guide-heading-h1 {
+  margin: 0 0 1.3rem;
+  font-size: clamp(2.35rem, 4vw, 3.35rem);
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.guide-article .guide-heading-h1:not(:first-child) {
+  margin-top: 3.8rem;
+  font-size: clamp(1.9rem, 2.4vw, 2.25rem);
+}
+
+.guide-heading-h2 {
+  margin: 4rem 0 1.3rem;
+  font-size: clamp(1.85rem, 2.5vw, 2.375rem); /* ~36px at 1440px viewport */
+  font-weight: 700;
+  line-height: 1.28;
+}
+
+.guide-heading-h3 {
+  margin: 2.75rem 0 1rem;
+  font-size: 1.5rem; /* ~24px, up from ~23px */
+  line-height: 1.35;
+}
+
+/* ---------------------------------------------------------------- */
+/* Callouts - six emoji-keyed kinds (⚠️💡💰📌📋🖼️)                    */
+/* ---------------------------------------------------------------- */
+
+.guide-callout {
+  margin-left: 0;
+  margin-right: 0;
+  padding: 20px 24px 20px 22px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 16px;
+  background: var(--surface-muted);
+  color: var(--quote-text);
+  box-shadow: var(--shadow-soft);
+}
+
+.guide-callout > :last-child {
+  margin-bottom: 0;
+}
+
+.guide-callout--warning {
+  border-color: var(--callout-warning-border);
+  border-left-color: var(--callout-warning-border);
+  background: var(--callout-warning-bg);
+  color: var(--callout-warning-text);
+}
+
+.guide-callout--tip {
+  border-color: var(--callout-tip-border);
+  border-left-color: var(--callout-tip-border);
+  background: var(--callout-tip-bg);
+  color: var(--callout-tip-text);
+}
+
+.guide-callout--cost {
+  border-color: var(--callout-cost-border);
+  border-left-color: var(--callout-cost-border);
+  background: var(--callout-cost-bg);
+  color: var(--callout-cost-text);
+}
+
+.guide-callout--check {
+  border-color: var(--callout-check-border);
+  border-left-color: var(--callout-check-border);
+  background: var(--callout-check-bg);
+  color: var(--callout-check-text);
+}
+
+/* 📋 강사 노트 - visually distinct from the other five: dashed gray
+   border, no left accent bar, and a small label chip above the note. */
+.guide-callout--instructor {
+  padding: 18px 22px 20px;
+  border: 1px dashed var(--callout-instructor-border);
+  border-left-width: 1px;
+  background: var(--callout-instructor-bg);
+  color: var(--callout-instructor-text);
+  box-shadow: none;
+}
+
+.guide-callout--instructor .guide-callout__label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 10px;
+  margin-bottom: 0.55rem;
+  border-radius: 999px;
+  background: var(--callout-instructor-border);
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.guide-callout--instructor .guide-callout__body > :last-child {
+  margin-bottom: 0;
+}
+
+/* 🖼️ 그림 캡션 - placeholder card standing in for an image that hasn't
+   been produced yet. */
+.guide-callout--figure {
+  border-color: var(--border-strong);
+  border-left-color: var(--accent);
+  background: var(--surface);
+}
+
+/* 아직 열리지 않은 회차의 장을 가리키는 링크. 글자만 남기고 공개일을 붙인다. */
+.guide-link--locked {
+  color: var(--muted);
+}
+
+.guide-link__note {
+  margin-left: 0.25em;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- */
+/* Collapsible answer blocks (self-study loop)                        */
+/* ---------------------------------------------------------------- */
+
+.guide-article details {
+  overflow: hidden;
+  border: 2px solid #b8dfd1;
+  border-radius: 18px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-soft);
+}
+
+.guide-article details > summary {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  background: #eef9f4;
+  color: #125b43;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  list-style: none;
+}
+
+.guide-article details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.guide-article details > summary::after {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border: 1px solid #8fc7b3;
+  border-radius: 50%;
+  background: var(--surface);
+  content: "+";
+  font-size: 1.25rem;
+  line-height: 1;
+  place-items: center;
+}
+
+.guide-article details[open] > summary::after {
+  content: "-";
+}
+
+.guide-article details > summary:hover {
+  background: #e4f5ee;
+}
+
+.guide-article details > summary:focus-visible {
+  outline: 3px solid rgb(0 86 210 / 28%);
+  outline-offset: -3px;
+}
+
+/* The answer body is raw markdown, so there is no inner wrapper to pad.
+   Inset the direct children instead, and reset the `width: 100%` that
+   .table-scroll and .code-block carry, which would otherwise overflow the
+   inset box and get clipped by the overflow: hidden above. */
+.guide-article details > :not(summary) {
+  width: auto;
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+}
+
+.guide-article details > summary + * {
+  margin-top: 1.15rem;
+}
+
+.guide-article details > :last-child {
+  margin-bottom: 1.15rem;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.table-scroll table {
+  width: 100%;
+  min-width: 660px;
+  border-collapse: collapse;
+  background: var(--surface);
+}
+
+.table-scroll th,
+.table-scroll td {
+  padding: 17px 18px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.15rem; /* ~18.4px, up from ~17.5px */
+  line-height: 1.72;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table-scroll th + th,
+.table-scroll td + td {
+  padding-left: 18px;
+}
+
+.table-scroll th {
+  background: var(--surface-muted);
+  font-weight: 800;
+}
+
+.table-scroll tr:last-child td {
+  border-bottom: 0;
+}
+
+.inline-code {
+  padding: 0.1em 0.36em;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #eef5ff;
+  color: var(--accent-strong);
+  font-size: 0.92em;
+  word-break: break-word;
+}
+
+.code-block {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--code-bg);
+  box-shadow: var(--shadow-soft);
+}
+
+.code-block__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 42px;
+  gap: 12px;
+  padding: 8px 10px 8px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-muted);
+}
+
+.code-block__language {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 22px;
+  overflow-x: auto;
+  color: var(--code-text);
+  font-size: 1.03125rem; /* ~16.5px, up from ~15.2px */
+  line-height: 1.72;
+}
+
+.code-block code {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: inherit;
+  /* 프롬프트가 대부분 긴 한국어 문장이라 줄바꿈해서 보여 준다. 가로 스크롤이면
+     강의 모드에서 프롬프트 끝이 화면 밖으로 나간다. 복사 버튼은 원문을 그대로 복사한다. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.copy-button:hover,
+.copy-button:focus-visible {
+  border-color: var(--accent);
+  outline: 0;
+}
+
+.mobile-topbar {
+  display: none;
+}
+
+.mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  visibility: hidden;
+  background: rgb(15 23 42 / 45%);
+  opacity: 0;
+  transition:
+    opacity 160ms ease,
+    visibility 160ms ease;
+}
+
+.mobile-backdrop.is-open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mobile-panel {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1001;
+  width: min(88vw, 360px);
+  padding: 18px;
+  overflow-y: auto;
+  visibility: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transform: translateX(-100%);
+  transition:
+    transform 180ms ease,
+    visibility 180ms ease;
+}
+
+.mobile-panel.is-open {
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.mobile-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  color: var(--text);
+  font-weight: 850;
+}
+
+.mobile-panel__close,
+.mobile-menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.mobile-panel__close:hover,
+.mobile-panel__close:focus-visible,
+.mobile-menu-button:hover,
+.mobile-menu-button:focus-visible {
+  border-color: var(--accent-strong);
+  color: var(--accent-strong);
+  outline: 0;
+}
+
+@media (max-width: 980px) {
+  html {
+    scroll-padding-top: 78px;
+  }
+
+  .mobile-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 60px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgb(255 255 255 / 96%);
+    backdrop-filter: blur(10px);
+  }
+
+  .mobile-topbar__title {
+    overflow: hidden;
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 850;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .guide-layout {
+    display: block;
+    min-height: auto;
+  }
+
+  .guide-sidebar {
+    display: none;
+  }
+
+  .guide-main {
+    padding: 34px 18px 76px;
+  }
+
+  .guide-article {
+    width: 100%;
+  }
+
+  .guide-article p,
+  .guide-article li,
+  .guide-article blockquote,
+  .guide-article details {
+    font-size: 1.02rem;
+    line-height: 1.82;
+  }
+
+  .guide-heading {
+    scroll-margin-top: 86px;
+  }
+
+  .guide-heading-h1 {
+    font-size: 2.05rem;
+  }
+
+  .guide-article .guide-heading-h1:not(:first-child) {
+    margin-top: 3rem;
+    font-size: 1.78rem;
+  }
+
+  .guide-heading-h2 {
+    margin-top: 2.45rem;
+    font-size: 1.5rem;
+  }
+
+  .guide-heading-h3 {
+    margin-top: 1.95rem;
+    font-size: 1.18rem;
+  }
+
+  .code-block pre {
+    padding: 16px;
+    font-size: 0.86rem;
+  }
+
+  .table-scroll table {
+    min-width: 560px;
+  }
+}
+
+@media (max-width: 560px) {
+  .guide-main {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .guide-article ul,
+  .guide-article ol {
+    padding-left: 1.18rem;
+  }
+
+  .guide-heading-h1 {
+    font-size: 1.82rem;
+  }
+
+  .guide-callout {
+    padding-left: 1rem;
+  }
+
+  .code-block__toolbar {
+    padding-left: 12px;
+  }
+}
+
+.guide-page--lecture .guide-layout {
+  display: block;
+  max-width: none;
+  min-height: 100vh;
+}
+
+.guide-page--lecture .guide-sidebar {
+  display: none;
+}
+
+.guide-page--lecture .mobile-topbar {
+  display: none;
+}
+
+.guide-page--lecture .guide-main {
+  min-height: 100vh;
+  /* 자료 보기 버튼이 오른쪽 위에 떠 있으므로 양옆을 그 폭만큼 비워 가운데를 맞춘다. */
+  padding: clamp(48px, 5vh, 74px) 150px 118px;
+  background: var(--surface);
+}
+
+.guide-page--lecture .guide-article {
+  /* 16:9 projector screens: use most of the width now that the sidebar is
+     hidden, capped so lines don't run away on ultra-wide displays. */
+  width: min(100%, 1680px);
+}
+
+.guide-page--lecture .guide-article p,
+.guide-page--lecture .guide-article li,
+.guide-page--lecture .guide-article blockquote,
+.guide-page--lecture .guide-article details {
+  font-size: clamp(1.35rem, calc(14px + 0.8vw), 2rem); /* ~29-30px at 1920px viewport */
+  line-height: 1.9;
+}
+
+.guide-page--lecture .guide-callout {
+  padding: 24px 30px 24px 28px;
+}
+
+.guide-page--lecture .guide-heading {
+  scroll-margin-top: 34px;
+}
+
+.guide-page--lecture .guide-heading-h1 {
+  font-size: clamp(3.6rem, calc(41px + 2.3vw), 5.5rem); /* ~85px at 1920px viewport */
+}
+
+.guide-page--lecture .guide-article .guide-heading-h1:not(:first-child) {
+  font-size: clamp(2.8rem, calc(31px + 1.8vw), 4.2rem); /* ~65px at 1920px viewport */
+}
+
+.guide-page--lecture .guide-heading-h2 {
+  font-size: clamp(2.2rem, calc(25px + 1.5vw), 3.5rem); /* ~54px at 1920px viewport */
+}
+
+.guide-page--lecture .guide-heading-h3 {
+  font-size: clamp(1.6rem, calc(19px + 1.1vw), 2.6rem); /* ~40px at 1920px viewport */
+}
+
+.guide-page--lecture .table-scroll th,
+.guide-page--lecture .table-scroll td {
+  font-size: clamp(1.2rem, calc(12.5px + 0.75vw), 1.75rem); /* ~27px at 1920px viewport */
+}
+
+.guide-page--lecture .code-block pre {
+  font-size: clamp(1.15rem, calc(12px + 0.68vw), 1.65rem); /* ~25px at 1920px viewport */
+}
+
+@media (max-width: 980px) {
+  /* Below 980px the sticky mobile topbar owns the top-right corner (its
+     hamburger button lives there). Moving the lecture-mode toggle to a
+     bottom-right FAB avoids the two fixed-position controls overlapping. */
+  .lecture-mode-toggle {
+    top: auto;
+    right: 16px;
+    bottom: 16px;
+    display: none;
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 0.8rem;
+  }
+
+  /* 자료 보기에서는 상단 바의 버튼을 쓰고, 상단 바가 사라지는 강의 모드에서만 떠 있는 버튼으로 빠져나온다. */
+  .guide-page--lecture .lecture-mode-toggle {
+    display: inline-flex;
+  }
+
+  .mobile-topbar__actions {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mobile-lecture-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 36px;
+    padding: 0 11px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  /* 좁은 화면에서 표 첫 열이 한 글자씩 줄바꿈되지 않게 최소 너비를 준다. */
+  .table-scroll th:first-child,
+  .table-scroll td:first-child {
+    min-width: 5.5em;
+  }
+
+  .guide-page--lecture .guide-main {
+    padding: 56px 18px 76px;
+  }
+
+  .guide-page--lecture .guide-article p,
+  .guide-page--lecture .guide-article li,
+  .guide-page--lecture .guide-article blockquote,
+  .guide-page--lecture .guide-article details {
+    font-size: 1.08rem;
+  }
+
+  .guide-page--lecture .guide-heading-h1 {
+    font-size: 2.15rem;
+  }
+
+  .guide-page--lecture .guide-article .guide-heading-h1:not(:first-child) {
+    font-size: 1.85rem;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Home page                                                          */
+/* ---------------------------------------------------------------- */
+
+.home-hero__eyebrow {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.home-hero h1 {
+  margin: 0 0 20px;
+  color: var(--text);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.home-hero__desc {
+  max-width: 640px;
+  margin: 0 0 16px;
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.home-hero__desc a {
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+.home-tools {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.home-track {
+  margin-top: 3rem;
+}
+
+.home-track h2 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.home-track-desc {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.home-card-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.home-card {
+  display: block;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: var(--shadow-soft);
+}
+
+.home-card:hover,
+.home-card:focus-visible {
+  border-color: var(--accent-strong);
+  outline: 0;
+}
+
+.home-card-number {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.home-card-title {
+  display: block;
+  font-weight: 700;
+}
+
+.home-card-desc {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.home-card-notice {
+  display: block;
+  margin-top: 8px;
+  color: var(--callout-check-text);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* 실습 제목 옆 구분 표시. 개요의 실습 구분표에서 읽는다(lib/practice-labels.ts). */
+.practice-chip {
+  display: inline-block;
+  margin-left: 0.7rem;
+  padding: 0.2rem 0.75rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.practice-chip--together {
+  border-color: var(--callout-tip-border);
+  background: var(--callout-tip-bg);
+  color: var(--callout-tip-text);
+}
+
+.practice-chip--demo {
+  border-color: var(--callout-cost-border);
+  background: var(--callout-cost-bg);
+  color: var(--callout-cost-text);
+}
+
+.practice-chip--optional {
+  background: var(--surface-muted);
+  color: var(--muted);
+}
+
+.guide-article .session-notice {
+  padding: 12px 18px;
+  font-size: 0.95rem;
+}
+
+/* 홈 - 전체 사이클 한 줄 요약. 사전 배포 시 첫 화면에서 흐름을 보여준다. */
+.home-hero__cycle {
+  margin: 16px 0 0;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+/* 홈 - 이 사이트 밖에 있는 자료 안내 */
+.home-related {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.home-related h2 {
+  margin: 0 0 16px;
+  color: var(--text);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.home-related__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.home-related__list li {
+  display: grid;
+  gap: 3px;
+}
+
+.home-related__list strong {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.home-related__list span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* 홈 - 공개 전 회차 카드. 제목과 날짜만 보이고 링크가 없다. */
+.home-card--locked {
+  background: var(--surface-muted);
+  box-shadow: none;
+  cursor: default;
+}
+
+.home-card--locked .home-card-title {
+  color: var(--muted);
+}
+
+.home-card--locked:hover {
+  border-color: var(--border);
+}
+
+/* 홈 - 사전 준비와 금요일 Zoom 목록 */
+.home-prep {
+  margin: 0 0 12px;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 6px;
+  color: var(--text);
+  line-height: 1.6;
+}
