@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getGroupMeta, getLockedSession, getSessionNotice, isGroupOpen, SESSIONS } from "./sessions";
+import { formatSessionNotice, getGroupMeta, getLockedSession, getSessionNotice, isGroupOpen, SESSIONS } from "./sessions";
 
 describe("isGroupOpen", () => {
   it("부록(9)은 항상 열려 있다", () => {
@@ -38,19 +38,29 @@ describe("isGroupOpen", () => {
   });
 });
 
+describe("formatSessionNotice", () => {
+  it("tentative 회차에는 현장 상황에 따라 바뀔 수 있다는 안내를 만든다", () => {
+    expect(formatSessionNotice({ label: "2회차", tentative: true })).toBe("2회차 교안은 현장 상황에 맞게 바뀔 수 있습니다.");
+  });
+
+  it("tentative가 없거나 false인 회차, 없는 회차는 안내가 없다", () => {
+    expect(formatSessionNotice({ label: "2회차" })).toBeNull();
+    expect(formatSessionNotice({ label: "2회차", tentative: false })).toBeNull();
+    expect(formatSessionNotice(undefined)).toBeNull();
+  });
+});
+
 describe("getSessionNotice", () => {
-  it("tentative 회차에는 현장 상황에 따라 바뀔 수 있다는 안내를 돌려준다", () => {
-    for (const session of SESSIONS.filter((item) => item.tentative && !item.hidden)) {
-      expect(getSessionNotice(session.id)).toBe(`${session.label} 교안은 현장 상황에 맞게 바뀔 수 있습니다.`);
+  it("숨기지 않은 회차는 sessions.json의 tentative 값을 따른다", () => {
+    for (const session of SESSIONS.filter((item) => !item.hidden)) {
+      expect(getSessionNotice(session.id)).toBe(formatSessionNotice(session));
     }
   });
 
-  it("2회차와 3회차가 tentative다", () => {
-    expect(SESSIONS.filter((item) => item.tentative).map((item) => item.id)).toEqual(["2", "3"]);
-  });
-
-  it("tentative가 아닌 회차, 부록, 모르는 그룹은 안내가 없다", () => {
-    expect(getSessionNotice("1")).toBeNull();
+  it("hidden 회차, 부록, 모르는 그룹은 안내가 없다", () => {
+    for (const session of SESSIONS.filter((item) => item.hidden)) {
+      expect(getSessionNotice(session.id)).toBeNull();
+    }
     expect(getSessionNotice("9")).toBeNull();
     expect(getSessionNotice("5")).toBeNull();
   });

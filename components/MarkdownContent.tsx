@@ -1,19 +1,10 @@
-// Ported from claude-education-site/components/MarkdownContent.tsx.
-//
-// Changes from the reference:
-// - Callout classification moved to lib/callouts.ts (a pure function, unit
-//   tested there) and switched from Korean text prefixes ("실습 문제", "정답
-//   예시", ...) to the leading-emoji scheme this curriculum's source
-//   markdown actually uses (⚠️💡💰📌📋🖼️).
-// - rehype-raw added so the self-study loop's collapsible answer blocks
-//   (<details><summary>) in content/*.md render as real HTML. The markdown
-//   in content/ is authored in this repo, so no untrusted HTML reaches it.
-// - "instructor" (📋 강사 노트) renders a labeled note block instead of a
-//   plain blockquote. "figure" (🖼️ 화면 확인) is an ordinary callout that
-//   tells students what the screen should show at that step.
-// - Links to chapters of a session that has not opened yet render as plain
-//   text with the opening date, so appendix chapters can point ahead
-//   without leaking unpublished pages.
+// 장 본문 마크다운을 화면으로 그린다.
+// - 인용문 맨 앞 이모지(⚠️💡💰📌📋🖼️)로 안내 상자 종류를 정한다(lib/callouts.ts).
+//   📋 강사 노트는 이름표가 붙은 메모 상자로, 🖼️ 화면 확인은 일반 안내 상자로 그린다.
+// - rehype-raw로 본문의 <details> 접기 블록을 HTML로 그린다. content/는 이 저장소에서
+//   쓰는 글이라 외부 HTML이 들어오지 않는다.
+// - 아직 열리지 않은 회차의 장을 가리키는 링크는 공개일을 붙인 글자로만 남겨,
+//   부록이 뒤 회차를 가리켜도 미공개 페이지 주소가 새지 않게 한다.
 import type { Heading, Root } from "mdast";
 import { Children, isValidElement, type ReactNode } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";

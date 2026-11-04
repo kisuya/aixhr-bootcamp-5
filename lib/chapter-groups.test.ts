@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { buildHomeSessionCards, groupChaptersBySession } from "./chapter-groups";
 import type { ChapterMeta } from "@/lib/chapters";
+import { formatSessionNotice, VISIBLE_SESSIONS } from "@/lib/sessions";
 
 function ch(slug: string): ChapterMeta {
   const group = slug.split("-")[0];
@@ -36,13 +37,9 @@ describe("buildHomeSessionCards", () => {
     expect(cards[1].chapterTitles).toEqual([]);
   });
 
-  it("tentative 회차 카드에는 안내를 담는다", () => {
+  it("카드 안내는 각 회차의 tentative 값을 따른다", () => {
     const cards = buildHomeSessionCards([ch("1-1"), ch("2-1"), ch("3-1")]);
-    expect(cards.map((card) => card.notice)).toEqual([
-      null,
-      "2회차 교안은 현장 상황에 맞게 바뀔 수 있습니다.",
-      "3회차 교안은 현장 상황에 맞게 바뀔 수 있습니다."
-    ]);
+    expect(cards.map((card) => card.notice)).toEqual(VISIBLE_SESSIONS.map((session) => formatSessionNotice(session)));
   });
 
   it("카드에 날짜와 요약을 담는다", () => {

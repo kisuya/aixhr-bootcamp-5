@@ -1,6 +1,5 @@
 "use client";
 
-// Ported verbatim from claude-education-site/components/CopyButton.tsx.
 import { Check, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 

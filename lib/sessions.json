@@ -16,7 +16,6 @@
       "date": "2026-10-20",
       "dateLabel": "10/20(화)",
       "open": true,
-      "tentative": true,
       "summary": "스킬과 예약 작업, Cowork, 브라우저와 화면 제어, Apps Script와 API"
     },
     {
@@ -26,7 +25,6 @@
       "date": "2026-10-27",
       "dateLabel": "10/27(화)",
       "open": true,
-      "tentative": true,
       "summary": "Claude Code로 HR 미니앱 만들기, 사내망과 폐쇄망에서 쓰기, 로그인과 배포, 내 도구 시작"
     },
     {

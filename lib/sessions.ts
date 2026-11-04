@@ -24,9 +24,12 @@ export const APPENDIX: GroupMeta = data.appendix;
 
 type Env = Record<string, string | undefined>;
 
-export function getSessionNotice(groupId: string): string | null {
-  const session = VISIBLE_SESSIONS.find((item) => item.id === groupId);
+export function formatSessionNotice(session: Pick<SessionInfo, "label" | "tentative"> | undefined): string | null {
   return session?.tentative ? `${session.label} 교안은 현장 상황에 맞게 바뀔 수 있습니다.` : null;
+}
+
+export function getSessionNotice(groupId: string): string | null {
+  return formatSessionNotice(VISIBLE_SESSIONS.find((item) => item.id === groupId));
 }
 
 // 부록은 항상 열려 있다. 회차는 sessions.json의 open을 따르고,

@@ -1,34 +1,9 @@
 "use client";
 
-// Ported from claude-education-site/components/GuideShell.tsx and extended
-// for a multi-chapter site.
-//
-// Changes from the reference (single-document shell):
-// - Props switch from a single `guide: ParsedGuide` to `chapters` (every
-//   chapter's metadata), `current` (the chapter being viewed, or null on
-//   the home page) and `globalSearchIndex` (search entries spanning every
-//   chapter). A new `children` prop was added — the reference embedded its
-//   one document's `MarkdownContent` directly in the shell; a multi-page
-//   site needs the shell to wrap whatever page-specific body Server
-//   Components hand it (chapter markdown + prev/next nav, or the home
-//   page's intro + track lists) instead.
-// - The flat "toc" sidebar nav is replaced by `ChapterNav`: chapters
-//   grouped by track (안내/1교시/2교시/3교시/참고), each chapter a link,
-//   and the *current* chapter's h2 headings nested underneath with the
-//   same scroll-spy active highlight the reference used for its TOC.
-// - Search now runs over the global search index (every chapter) instead
-//   of one document's section index, and each result carries a
-//   chapterTitle. Clicking a result scrolls in place if it belongs to the
-//   current chapter, otherwise navigates to `/guide/{slug}#{id}` via the
-//   router.
-// - The global search index (~230KB of JSON covering every chapter) is no
-//   longer passed in as a prop — that would inline it into every page's
-//   RSC payload whether or not the visitor ever opens search. Instead
-//   GuideShell fetches it lazily, once, from the pre-rendered
-//   `/api/search-index` static route the first time the search UI is
-//   opened or used, and caches the result for the life of the component.
-// - Lecture mode, reading progress, and the mobile menu (including its
-//   focus trap) are unchanged from the reference.
+// 모든 페이지를 감싸는 셸. 회차별 장 목록과 현재 장의 절 목록(사이드바), 전체 검색,
+// 강의 모드, 읽기 진행률, 모바일 메뉴를 맡는다.
+// 검색 색인은 페이지마다 싣지 않고, 검색을 처음 쓸 때 정적 경로 /api/search-index에서
+// 한 번 받아 둔다. 결과가 현재 장이면 그 자리로 스크롤하고, 다른 장이면 그 장으로 이동한다.
 import { Menu, PanelLeft, Presentation, Search, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

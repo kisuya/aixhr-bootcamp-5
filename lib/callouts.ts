@@ -1,9 +1,4 @@
-// Classifies a blockquote's leading emoji marker into a callout kind.
-// Adapted from claude-education-site's text-prefix classifier
-// (components/MarkdownContent.tsx: getCalloutKindFromText), which matched
-// Korean text prefixes ("실습 문제", "정답 예시", ...). This curriculum's
-// source markdown (../claude/*.md) marks callouts with a leading emoji
-// instead, so the classifier keys off emoji rather than text.
+// 인용문 맨 앞의 이모지로 안내 상자 종류를 정한다.
 export type CalloutKind = "warning" | "tip" | "cost" | "check" | "instructor" | "figure";
 
 const EMOJI_TO_KIND: ReadonlyArray<readonly [string, CalloutKind]> = [

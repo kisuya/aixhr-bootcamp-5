@@ -1,5 +1,3 @@
-// Multi-chapter port of claude-education-site's lib/guide.ts.
-//
 // 장 파일은 content/{회차}-{순번}_{제목}.md 이다. 회차 1~4와 부록 9가
 // 있고, 회차는 sessions.json의 공개 여부에 따라 목록, 장 페이지, 검색
 // 색인에서 함께 빠진다. 공개 판단은 이 파일의 세 함수(getChapters,
@@ -37,9 +35,8 @@ export type ChapterMeta = {
   title: string;
   file: string;
   // Depth-2 headings only — the sidebar shows every chapter's h2 list at
-  // all times (instructor decision, 2026-08-15: no collapsed menus), so
-  // each chapter's sections must travel with its meta, not just with the
-  // currently parsed chapter.
+  // all times (no collapsed menus), so each chapter's sections must travel
+  // with its meta, not just with the currently parsed chapter.
   headings: GuideHeading[];
 };
 

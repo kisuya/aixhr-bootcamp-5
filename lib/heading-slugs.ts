@@ -1,14 +1,8 @@
 // Shared heading-id slugging logic.
 //
-// Previously lib/chapters.ts (server: search index + heading list) and
-// components/MarkdownContent.tsx (client: heading anchors rendered by
-// react-markdown) each wrote their own GithubSlugger call sequence to turn
-// heading text into an `id`. Search results link to `/guide/{slug}#{id}`
-// using the id lib/chapters.ts computed, and the target anchor is the id
-// MarkdownContent assigns when it renders — those two independently
-// written implementations had to happen to agree, with nothing enforcing
-// it. Extracting both the text-extraction and the slugger-sequencing here
-// means there is exactly one algorithm, so the two call sites cannot drift.
+// Search results link to `/guide/{slug}#{id}` using the id lib/chapters.ts
+// computes, and the target anchor is the id MarkdownContent assigns when it
+// renders. Both use this one algorithm, so the two call sites cannot drift.
 import GithubSlugger from "github-slugger";
 import type { Heading, Nodes, Parents } from "mdast";
 

@@ -33,7 +33,7 @@ GitHub 계정과 Vercel 계정이 필요합니다. 환경변수는 넣지 않아
 
 1. 위 버튼을 누르고 GitHub 계정으로 Vercel에 로그인합니다.
 2. 저장소 이름을 정하고 "Create"를 누릅니다. 내 GitHub에 이 저장소의 사본이 생깁니다. 비공개로 두려면 이 화면에서 Private를 고릅니다.
-3. 배포가 끝나면 화면에 나온 주소(`○○.vercel.app`)로 엽니다.
+3. 배포가 끝나면 프로젝트 화면의 Domains에 나온 주소(`○○.vercel.app`)로 엽니다.
 
 ### 방법 2. Fork한 뒤 Vercel에서 가져오기
 
@@ -58,7 +58,8 @@ npx vercel --prod
 ### 배포한 뒤
 
 - 방법 1, 2로 만든 프로젝트는 내 저장소의 `main`에 올린 변경을 Vercel이 자동으로 다시 배포합니다.
-- 기본으로는 주소를 아는 누구나 엽니다. 수강생만 보게 하려면 Vercel 프로젝트의 Settings > Deployment Protection에서 보호를 켭니다. 방법과 플랜별 차이는 교안 3-3의 "로그인으로 볼 사람 정하기"에 있습니다.
+- 수강생에게는 Domains에 나온 주소를 알려 줍니다. 배포마다 생기는 긴 주소(`○○-해시-계정.vercel.app`)는 Vercel에 로그인한 본인만 엽니다.
+- 기본으로는 Domains의 주소를 아는 누구나 엽니다. 수강생만 보게 하려면 Vercel 프로젝트의 Settings > Deployment Protection에서 보호를 켭니다. 방법과 플랜별 차이는 교안 3-3의 "로그인으로 볼 사람 정하기"에 있습니다.
 
 ## 내 PC에서 보기
 
@@ -88,7 +89,7 @@ python3 -m http.server 8000 -d out # http://localhost:8000 으로 엽니다
 | 회차 이름, 날짜, 공개 | `lib/sessions.json` | `open: true`면 공개, `false`면 날짜만 보이고 잠깁니다. `hidden: true`면 홈과 메뉴에서도 숨깁니다. `tentative: true`면 "바뀔 수 있습니다" 안내가 붙습니다. |
 | 그림 | `public/figures/` | 본문에서 `![설명](/figures/파일이름.png)`으로 넣습니다. |
 | 실습 파일 | `public/practice-files/` | 본문의 내려받기 링크가 이 폴더의 파일을 가리킵니다. 파일을 바꾸면 본문의 정답 숫자도 함께 고칩니다. |
-| 과정 이름 | `app/layout.tsx`, `app/page.tsx`, `app/not-found.tsx`, `components/GuideShell.tsx` | "원티드랩 Claude 심화 부트캠프" 문구를 내 과정 이름으로 바꿉니다. |
+| 과정 이름 | `app/layout.tsx`, `app/page.tsx`, `app/not-found.tsx`, `app/guide/[slug]/page.tsx`, `components/GuideShell.tsx` | "원티드랩 Claude 심화 부트캠프"와 "AI와 일하는 HR 5기" 문구를 내 과정 이름으로 바꿉니다. |
 
 Claude Code로 이 폴더를 열고 "1회차만 공개하고 나머지 회차는 잠가 줘"처럼 요청해도 됩니다.
 
